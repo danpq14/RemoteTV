@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    function Remote(code,mode,battery) {
+        this.mode=mode;
+        this.battery=battery;
+        this.code=code;
+        this.changeCH=function (Tivi,number) {
+            if (this.battery>0) {
+                Tivi.changeChannel(number);
+                this.battery--;
+            }
+        };
+        this.changeVolume=function (Tivi) {
+            if (this.battery>0) {
+                Tivi.changeVolume();
+                this.battery--;
+            }
+        };
+        this.checkMode=function () {
+            console.log('remote is : '+this.mode)
+        }
+        this.checkBattery=function () {
+            console.log('Battery of remote is : '+this.battery);
+        }
+        this.turnOnOff=function (Tivi) {
+            if (this.battery > 0) {
+                if (Tivi.status == 'off') {
+                    Tivi.status = 'on';
+                } else if (Tivi.status == 'on') {
+                    Tivi.status = 'off';
+                }
+            }
+        }
+    }
+    function Tivi(name,volume,status,channel) {
+        this.name=name;
+        this.volume=volume;
+        this.status=status;
+        this.channel=channel;
+        this.changeChannel=function (number) {
+            if (this.status == 'on') {
+                this.channel = number;
+            }
+        }
+        this.changeVolume=function () {
+            if (this.status == 'on') {
+                this.volume +=2;
+            }
+        }
+        this.checkStatus = function () {
+            console.log('tivi is : '+this.status);
+        }
+    }
+    let remote1= new Remote(12,'on',10);
+    let sony=new Tivi('Sony',2,'off',0);
+    remote1.turnOnOff(sony);
+    console.log(sony.status);
+    remote1.changeVolume(sony);
+    remote1.changeVolume(sony);
+    console.log(sony.volume);
+    remote1.changeCH(sony,7);
+    console.log(sony.channel);
+    remote1.turnOnOff(sony);
+    remote1.changeCH(sony,4);
+    console.log(sony.channel);
+
+</script>
+</body>
+</html>
